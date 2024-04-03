@@ -16,7 +16,7 @@ SQL Bak Version reads the binary content of the SQL Server backup file and analy
 Contributions are welcome! If you encounter any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
 
 ## License
-This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/) - see the LICENSE file for details.
+This project is licensed under the [MIT License](LICENSE.txt) - see the LICENSE file for details.
 
 ## Acknowledgements
 This project was inspired by the need to quickly identify the SQL Server version of backup files without the need for a preinstalled SQL Server instance. Special thanks to the contributors who helped improve the tool.
