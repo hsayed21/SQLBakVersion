@@ -5,24 +5,18 @@ namespace SQLBakVersion.Class
 {
     public interface IVersionDeterminer
     {
-        string DetermineVersion(FileStream fileStream, long versionOffset);
+        string DetermineVersion(FileStream fileStream, long MSCIOffset);
     }
 
     public class VersionDeterminer : IVersionDeterminer
     {
-        private const int BytesPerSet = 16; // Number of bytes in each set
-        private const int ByteToRetrieve = 13; // Byte number to retrieve in the 11th set
 
-        public string DetermineVersion(FileStream fileStream, long versionOffset)
+        public string DetermineVersion(FileStream fileStream, long MSCIOffset)
         {
-            const int setsToSkip = 10; // Number of sets to skip
-            long totalBytesToSkip = BytesPerSet * setsToSkip;
-            totalBytesToSkip += versionOffset; // Adjust for marker offset
-
-            fileStream.Seek(totalBytesToSkip, SeekOrigin.Begin);
-            fileStream.Seek(ByteToRetrieve - 1, SeekOrigin.Current); // Seek to the byte position
-
+            long versionOffset = MSCIOffset + 172;
             byte[] versionBytes = new byte[2];
+
+            fileStream.Seek(versionOffset, SeekOrigin.Begin);
             fileStream.Read(versionBytes, 0, 2);
             Int16 dbVersion = BitConverter.ToInt16(versionBytes, 0);
 

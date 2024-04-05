@@ -10,17 +10,18 @@ namespace SQLBakVersion.Class
 
     public class MarkerFinder : IMarkerFinder
     {
-        private const string MsciMarker = "4D-53-43-49"; // "MSCI" marker
+        private const int MsciMarkerSize = 4;
+        private const int MsciMarker = 0x4943534D; // "MSCI" marker Little Endian
 
         public long FindMarker(FileStream fileStream)
         {
             byte[] markerBytes = new byte[4];
-            while (fileStream.Read(markerBytes, 0, 4) == 4)
+            while (fileStream.Read(markerBytes, 0, MsciMarkerSize) == 4)
             {
-                string hexValue = BitConverter.ToString(markerBytes);
-                if (hexValue == MsciMarker)
+                if (BitConverter.ToInt32(markerBytes, 0) == MsciMarker)
                 {
-                    return fileStream.Position - 4;
+                    fileStream.Seek(-MsciMarkerSize, SeekOrigin.Current);
+                    return fileStream.Position;
                 }
                 fileStream.Seek(-2, SeekOrigin.Current);
             }

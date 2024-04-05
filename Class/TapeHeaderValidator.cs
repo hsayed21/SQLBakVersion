@@ -10,14 +10,16 @@ namespace SQLBakVersion.Class
 
     public class TapeHeaderValidator : ITapeHeaderValidator
     {
-        private const string TapeHeaderStart = "54-41-50-45"; // Start of tape header "TAPE"
-
+        private const int TapeHeaderSize = 4;
+        private const int TapeHeaderStart = 0x45504154; // Start of tape header "TAPE" Little Endian
         public bool Validate(FileStream fileStream)
         {
-            byte[] tapeHeaderStartBytes = new byte[4];
-            fileStream.Read(tapeHeaderStartBytes, 0, 4);
-            string hexValue = BitConverter.ToString(tapeHeaderStartBytes);
-            return hexValue == TapeHeaderStart;
+            byte[] tapeHeaderStartBytes = new byte[TapeHeaderSize];
+
+            if (fileStream.Read(tapeHeaderStartBytes, 0, TapeHeaderSize) != TapeHeaderSize)
+                return false;  // Not enough data in the file
+            
+            return BitConverter.ToInt32(tapeHeaderStartBytes, 0) == TapeHeaderStart;
         }
     }
 }
