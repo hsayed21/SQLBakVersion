@@ -5,18 +5,17 @@ namespace SQLBakVersion.Class
 {
     public interface IVersionDeterminer
     {
-        string DetermineVersion(FileStream fileStream, long MSCIOffset);
+        string DetermineVersion(FileStream fileStream);
     }
 
     public class VersionDeterminer : IVersionDeterminer
     {
 
-        public string DetermineVersion(FileStream fileStream, long MSCIOffset)
+        public string DetermineVersion(FileStream fileStream)
         {
-            long versionOffset = MSCIOffset + 172;
             byte[] versionBytes = new byte[2];
 
-            fileStream.Seek(versionOffset, SeekOrigin.Begin);
+            fileStream.Seek(168, SeekOrigin.Current);
             fileStream.Read(versionBytes, 0, 2);
             Int16 dbVersion = BitConverter.ToInt16(versionBytes, 0);
 

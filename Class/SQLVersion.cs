@@ -28,13 +28,12 @@ namespace SQLBakVersion.Class
                         return "Invalid Tape Header";
                     }
 
-                    var versionOffset = _markerFinder.FindMarker(fs);
-                    if (versionOffset == -1)
+                    if (!_markerFinder.FindMarker(fs))
                     {
                         return "MSCI marker not found";
                     }
 
-                    return _versionDeterminer.DetermineVersion(fs, versionOffset);
+                    return _versionDeterminer.DetermineVersion(fs);
                 }
             }
             catch (Exception ex)
