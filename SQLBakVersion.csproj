@@ -49,10 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class\MarkerFinder.cs" />
-    <Compile Include="Class\SQLVersion.cs" />
-    <Compile Include="Class\TapeHeaderValidator.cs" />
-    <Compile Include="Class\VersionDeterminer.cs" />
+    <Compile Include="SQLVersion.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

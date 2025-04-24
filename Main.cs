@@ -89,20 +89,10 @@ namespace SQLBakVersion
         {
             lblDragDrop.Text = Path.GetFileName(filePath);
 
-            string output = string.Empty;
-            if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
-                output = "Please select a valid .bak file.";
-            else
-                output = sqlVersion.GetVersion(filePath);
-
-            lblVersion.Text = output;
-            if (output.StartsWith("SQL"))
-                lblVersion.ForeColor = Color.LightGreen;
-            else
-                lblVersion.ForeColor = Color.Red;
-
-            if (!lblVersion.Visible)
-                lblVersion.Visible = true;
+            string versionInfo = File.Exists(filePath) ? sqlVersion.GetVersion(filePath) : "File not found";
+            lblVersion.Text = versionInfo;
+            lblVersion.ForeColor = versionInfo.StartsWith("SQL") ? Color.LightGreen : Color.Red;
+            lblVersion.Visible = true;
         }
     }
 }
