@@ -31,15 +31,15 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Check out source
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      # - name: Check out source
+      #   uses: actions/checkout@v4
+      #   with:
+      #     fetch-depth: 0
 
-      - name: Set up .NET 8
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x
+      # - name: Set up .NET 8
+      #   uses: actions/setup-dotnet@v4
+      #   with:
+      #     dotnet-version: 8.0.x
 
       # - name: Install .NET Framework 4.5.2 Developer Pack
       #   shell: pwsh
