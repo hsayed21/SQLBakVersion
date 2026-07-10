@@ -56,6 +56,11 @@ namespace SQLBakVersion.Class
         /// <returns>SQL Server version or error message</returns>
         public string GetVersion(string filePath)
         {
+            if (string.Equals(Path.GetExtension(filePath), ".mdf", StringComparison.OrdinalIgnoreCase))
+            {
+                return GetMdfVersion(filePath);
+            }
+
             try
             {
                 using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
@@ -84,6 +89,25 @@ namespace SQLBakVersion.Class
             {
                 return $"Error: {ex.Message}";
             }
+        }
+
+        /// <summary>
+        /// Gets the SQL Server version recorded in an MDF boot page.
+        /// </summary>
+        private string GetMdfVersion(string filePath)
+        {
+            MdfVersion version = MdfVersionDetector.Detect(filePath);
+
+            if (!version.InternalVersion.HasValue)
+            {
+                return string.IsNullOrEmpty(version.FailureReason)
+                    ? "SQL version information not found"
+                    : version.FailureReason;
+            }
+
+            return version.Year.HasValue
+                ? string.Format("SQL Server {0}", version.Year.Value)
+                : string.Format("Unknown SQL Server version (code: {0})", version.InternalVersion.Value);
         }
 
         /// <summary>

@@ -77,7 +77,7 @@
             this.lblDragDrop.Name = "lblDragDrop";
             this.lblDragDrop.Size = new System.Drawing.Size(566, 88);
             this.lblDragDrop.TabIndex = 0;
-            this.lblDragDrop.Text = "Drop .bak file here or click to browse";
+            this.lblDragDrop.Text = "Drop .bak or .mdf file here or click to browse";
             this.lblDragDrop.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblDragDrop.Click += new System.EventHandler(this.pnlDragDrop_Click);
             // 
@@ -104,7 +104,7 @@
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(108, 17);
             this.lblTitle.TabIndex = 1;
-            this.lblTitle.Text = "SQL Bak Version";
+            this.lblTitle.Text = "SQL Backup & MDF Version";
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlTitleBar_MouseDown);
             this.lblTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlTitleBar_MouseMove);
             this.lblTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlTitleBar_MouseUp);
@@ -142,7 +142,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SQL Bak Version";
+            this.Text = "SQL Backup & MDF Version";
             this.TopMost = true;
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Main_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Main_DragEnter);

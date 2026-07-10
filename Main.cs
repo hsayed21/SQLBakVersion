@@ -49,7 +49,7 @@ namespace SQLBakVersion
 
         private void pnlDragDrop_Click(object sender, EventArgs e)
         {
-            SelectBakFile();
+            SelectDatabaseFile();
         }
 
         private void Main_DragEnter(object sender, DragEventArgs e)
@@ -57,7 +57,7 @@ namespace SQLBakVersion
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if (files.Length > 0 && Path.GetExtension(files[0]).ToLower() == ".bak")
+                if (files.Length > 0 && IsSupportedFile(files[0]))
                 {
                     e.Effect = DragDropEffects.Copy;
                     return;
@@ -69,23 +69,23 @@ namespace SQLBakVersion
         private void Main_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            if (files.Length > 0 && Path.GetExtension(files[0]).ToLower() == ".bak")
+            if (files.Length > 0 && IsSupportedFile(files[0]))
             {
-                ProcessBakFile(files[0]);
+                ProcessDatabaseFile(files[0]);
             }
         }
 
-        private void SelectBakFile()
+        private void SelectDatabaseFile()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "SQL Server backup files (*.bak)|*.bak";
+            openFileDialog.Filter = "SQL Server files (*.bak;*.mdf)|*.bak;*.mdf|SQL Server backup files (*.bak)|*.bak|SQL Server database files (*.mdf)|*.mdf";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                ProcessBakFile(openFileDialog.FileName);
+                ProcessDatabaseFile(openFileDialog.FileName);
             }
         }
 
-        private void ProcessBakFile(string filePath)
+        private void ProcessDatabaseFile(string filePath)
         {
             lblDragDrop.Text = Path.GetFileName(filePath);
 
@@ -93,6 +93,13 @@ namespace SQLBakVersion
             lblVersion.Text = versionInfo;
             lblVersion.ForeColor = versionInfo.StartsWith("SQL") ? Color.LightGreen : Color.Red;
             lblVersion.Visible = true;
+        }
+
+        private static bool IsSupportedFile(string filePath)
+        {
+            string extension = Path.GetExtension(filePath);
+            return string.Equals(extension, ".bak", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(extension, ".mdf", StringComparison.OrdinalIgnoreCase);
         }
     }
 }
